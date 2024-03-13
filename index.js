@@ -89,5 +89,40 @@ app.use((err, req, res, next) => {
 
 // Server listening
 app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+  console.log(`Server running at http://localhost:${PORT}/`);
 });
+
+app.get("/students", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM students");
+    res.status(200).json({
+      status: "success",
+      data: result.rows,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+app.post("/students", async (req, res) => {
+  const { name, address } = req.body;
+  try {
+    const result = await db.query(
+      `INSERT into students (name, address) values ('${name}', '${address}')`
+    );
+    res.status(200).json({
+      status: "success",
+      message: "data berhasil dimasukan",
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+// Update Student by ID
+
+// Delete Student by ID
+
+// Get student by ID
