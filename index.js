@@ -47,7 +47,7 @@ app.get("/students/:id", async (req, res) => {
         status: "error",
         message: "Data mahasiswa tidak ditemukan",
       });
-      return; // Menghentikan eksekusi kode selanjutnya jika mahasiswa tidak ditemukan
+      return;
     }
 
     res.status(200).json({
